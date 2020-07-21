@@ -9,5 +9,7 @@ ___
 - Transfer Money between accounts
 
 ### Operations rules
-- When withdraw cash from account, 1% of value is charged
-- Transfer between accounts is unlimented and free
+- When withdraw money from account, 1% of value is charged
+- When deposit money into account, account received 0.5% of value
+
+*Transfer between accounts is unlimented and free*
