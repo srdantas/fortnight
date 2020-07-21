@@ -12,4 +12,4 @@ ___
 - When withdraw money from account, 1% of value is charged
 - When deposit money into account, account received 0.5% of value
 
-*Transfer between accounts is unlimented and free*
+*Transfer between accounts is unliminted and free*
