@@ -1,4 +1,5 @@
 swagger: "2.0"
+
 info:
   description: "Simple Core Banking for basic operations, like movements between accounts and tax withdraw"
   version: "1.0.0"
