@@ -3,7 +3,8 @@ Simple Core Banking for basic operations, like movements between accounts and ta
 ___
 
 ### Operations
-- Create account, need name and document (like CPF)
+For using operations, need accounts for make it. For create account the API provides a endpoint for create account, with name and document (like CPF).
+
 - Deposit in exists account
 - Withdraw money
 - Transfer Money between accounts
