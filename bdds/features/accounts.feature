@@ -2,11 +2,6 @@ Feature: Create account
 
   Scenario: create account with success
     Given valid account data
-      | name    | document    |
-      | Berry   | 13254898494 |
-      | Ariadne | 23895589556 |
-      | Vienna  | 54146851584 |
-      | Moises  | 45897456498 |
     When request account creation
     Then account is create with success!
 

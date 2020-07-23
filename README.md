@@ -19,6 +19,8 @@ For using operations, need accounts for it, the API provides a endpoint for crea
 The folder bdds have a cucumber tests, write with python (behave), for all features exists on this project.
 This is a most high level of tests of this app.
 
+Into bdds exists a config file, called `behave.ini`, that have a server url config, default value is `localhost:8080`.
+
 for run features:
 ```shell
 cd bdds && \ 
