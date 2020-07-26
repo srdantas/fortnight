@@ -1,3 +1,9 @@
 spring:
   application:
     name: fortnight
+  datasource:
+    password: "0123456789"
+    username: "root"
+    url: jdbc:mysql://localhost:3306/fortnight
+server:
+  port: 8081

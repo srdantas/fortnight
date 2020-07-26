@@ -5,13 +5,13 @@ ___
 ### Operations
 For using operations, need accounts for it, the API provides a endpoint for create, with name and document (like CPF).
 
-- Deposit in exists account
+- Deposit in exists accountEntity
 - Withdraw money
 - Transfer Money between accounts
 
 ### Operations rules
-- When withdraw money from account, 1% of value is charged
-- When deposit money into account, account received 0.5% of value
+- When withdraw money from accountEntity, 1% of value is charged
+- When deposit money into accountEntity, accountEntity received 0.5% of value
 
 *Transfer between accounts is unlimited and free*
 
@@ -28,3 +28,9 @@ pip install . && \
 behave
 ```
 *run features required python 3.\* and pip installed*
+
+## Model
+A database model used to save:
+![database model](diagram.jpeg)
+
+This model is very simple, it ignores the history that register transfers between accounts.

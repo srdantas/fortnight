@@ -12,29 +12,29 @@ info:
 host: "fortnight.banking.com"
 basePath: "/accounts"
 tags:
-- name: "accounts"
-  description: "Everything accounts operations"
-- name: "operations"
-  description: "Transaction Operations for accounts"
+  - name: "accounts"
+    description: "Everything accounts operations"
+  - name: "operations"
+    description: "Transaction Operations for accounts"
 schemes:
-- "https"
+  - "https"
 paths:
   /accounts:
     post:
       tags:
-      - "accounts"
+        - "accounts"
       summary: "Create new account"
       description: ""
       operationId: "createAccount"
       produces:
         - "application/json"
       parameters:
-      - in: "body"
-        name: "body"
-        description: "account for create"
-        required: true
-        schema:
-          $ref: "#/definitions/Accounts"
+        - in: "body"
+          name: "body"
+          description: "account for create"
+          required: true
+          schema:
+            $ref: "#/definitions/Accounts"
       responses:
         "201":
           description: "Successful to create account"
@@ -42,27 +42,45 @@ paths:
           description: "Invalid request"
         "409":
           description: "This account already exists"
+  /accounts/{document}/balances:
+    get:
+      tags:
+        - "accounts"
+      parameters:
+        - name: "document"
+          in: "path"
+          description: "Document of account that create debit"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "success to find balances of account"
+          schema:
+            $ref: '#/definitions/Balaces'
+        "404":
+          description: "document not found"
+
   /accounts/{document}/debits:
     post:
       tags:
-      - "operations"
+        - "operations"
       summary: "Create new debit"
       description: ""
       operationId: "createDebit"
       produces:
         - "application/json"
       parameters:
-      - name: "document"
-        in: "path"
-        description: "Document of account that create debit"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "body"
-        description: "create a new debit"
-        required: true
-        schema:
-          $ref: '#/definitions/Transactions'
+        - name: "document"
+          in: "path"
+          description: "Document of account that create debit"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "create a new debit"
+          required: true
+          schema:
+            $ref: '#/definitions/Transactions'
       responses:
         "201":
           description: "Successful to debit money"
@@ -73,24 +91,24 @@ paths:
   /accounts/{document}/withdrawals:
     post:
       tags:
-      - "operations"
+        - "operations"
       summary: "Create new withdraw"
       description: ""
       operationId: "createWithdraw"
       produces:
         - "application/json"
       parameters:
-      - name: "document"
-        in: "path"
-        description: "Document of account that create withdraw"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "body"
-        description: "create a new withdraw"
-        required: true
-        schema:
-          $ref: '#/definitions/Transactions'
+        - name: "document"
+          in: "path"
+          description: "Document of account that create withdraw"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "create a new withdraw"
+          required: true
+          schema:
+            $ref: '#/definitions/Transactions'
       responses:
         "201":
           description: "Successful to withdraw money"
@@ -101,30 +119,44 @@ paths:
   /accounts/{document}/transfers:
     post:
       tags:
-      - "operations"
+        - "operations"
       summary: "Create new transfers"
       description: ""
       operationId: "createTransfers"
       produces:
         - "application/json"
       parameters:
-      - name: "document"
-        in: "path"
-        description: "Document of account that make a movement"
-        required: true
-        type: "string"
-      - in: "body"
-        name: "body"
-        description: "create a new transfer for accounts"
-        required: true
-        schema:
-          $ref: '#/definitions/Transfers'
+        - name: "document"
+          in: "path"
+          description: "Document of account that make a movement"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "create a new transfer for accounts"
+          required: true
+          schema:
+            $ref: '#/definitions/Transfers'
       responses:
         "201":
           description: "Successful to transfer money"
         "400":
           description: "Invalid request"
 definitions:
+  Balaces:
+    type: "object"
+    properties:
+      balances:
+        type: "array"
+        items:
+          $ref: '#/definitions/Balance'
+  Balance:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      amount:
+        type: "number"
   Accounts:
     type: "object"
     properties:
@@ -148,7 +180,7 @@ definitions:
     properties:
       message:
         type: "string"
-        description: "Sort description of error occurrent"
+        description: "Sort description of error"
   Transfers:
     type: "object"
     properties:
