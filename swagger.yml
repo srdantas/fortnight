@@ -56,7 +56,7 @@ paths:
         "200":
           description: "success to find balances of account"
           schema:
-            $ref: '#/definitions/Balaces'
+            $ref: '#/definitions/Balance'
         "404":
           description: "document not found"
 
@@ -143,13 +143,6 @@ paths:
         "400":
           description: "Invalid request"
 definitions:
-  Balaces:
-    type: "object"
-    properties:
-      balances:
-        type: "array"
-        items:
-          $ref: '#/definitions/Balance'
   Balance:
     type: "object"
     properties:

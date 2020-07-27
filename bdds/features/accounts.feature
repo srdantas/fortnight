@@ -4,6 +4,7 @@ Feature: Create account
     Given valid account data
     When request account creation
     Then account is create with success!
+    And balance with amount "0"!
 
   Scenario: create account already exists
     Given account data with document that already exists
@@ -19,3 +20,4 @@ Feature: Create account
     Given account data without name
     When request account creation
     Then account is not create with invalid data
+    And balance are not create
