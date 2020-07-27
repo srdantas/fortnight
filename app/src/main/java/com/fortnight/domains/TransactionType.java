@@ -1,4 +1,4 @@
-package com.fortnight.domain;
+package com.fortnight.domains;
 
 public enum TransactionType {
 

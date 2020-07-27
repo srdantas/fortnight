@@ -1,6 +1,6 @@
-package com.fortnight.gateway.database.mysql.entity;
+package com.fortnight.gateways.database.mysql.entities;
 
-import com.fortnight.domain.TransactionType;
+import com.fortnight.domains.TransactionType;
 import lombok.Data;
 
 import javax.persistence.Entity;

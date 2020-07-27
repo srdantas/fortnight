@@ -1,6 +1,6 @@
-package com.fortnight.gateway.database.mysql.repository;
+package com.fortnight.gateways.database.mysql.repositories;
 
-import com.fortnight.gateway.database.mysql.entity.TransactionEntity;
+import com.fortnight.gateways.database.mysql.entities.TransactionEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TransactionRepository extends JpaRepository<TransactionEntity, String> {

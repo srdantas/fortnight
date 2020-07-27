@@ -1,6 +1,6 @@
-package com.fortnight.gateway.database.mysql.repository;
+package com.fortnight.gateways.database.mysql.repositories;
 
-import com.fortnight.gateway.database.mysql.entity.BalanceEntity;
+import com.fortnight.gateways.database.mysql.entities.BalanceEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BalanceRepository extends JpaRepository<BalanceEntity, String> {

@@ -1,11 +1,8 @@
-package com.fortnight.gateway.database.mysql.entity;
+package com.fortnight.gateways.database.mysql.entities;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.time.Instant;
 
 @Data
@@ -17,7 +14,7 @@ public class AccountEntity {
     private String name;
     private Instant creation;
 
-    @OneToOne
+    @OneToOne()
     @JoinColumn(name = "document")
     private BalanceEntity balance;
 }
