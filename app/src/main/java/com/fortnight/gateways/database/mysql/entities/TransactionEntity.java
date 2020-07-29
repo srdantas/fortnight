@@ -3,12 +3,7 @@ package com.fortnight.gateways.database.mysql.entities;
 import com.fortnight.domains.TransactionType;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.Instant;
 
@@ -23,7 +18,8 @@ public class TransactionEntity {
     private TransactionType type;
     private Instant date;
 
+    @MapsId
     @ManyToOne()
     @JoinColumn(name = "document")
-    private BalanceEntity balance;
+    private CustomerEntity customer;
 }

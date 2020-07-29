@@ -1,15 +1,15 @@
 package com.fortnight.usecases;
 
-import com.fortnight.domains.Account;
+import com.fortnight.domains.Customer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 @Component
 @RequiredArgsConstructor
-public class BalanceSearchUseCase {
+public class CustomerSearchUseCase {
 
-    public Mono<Account> execute(final String document) {
+    public Mono<Customer> execute(final String document) {
         return Mono.error(new IllegalArgumentException());
     }
 }

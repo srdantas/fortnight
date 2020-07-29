@@ -5,8 +5,8 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class BalanceResponse {
+public class CustomerResponse {
 
     private String name;
-    private BigDecimal amount;
+    private BigDecimal balance;
 }

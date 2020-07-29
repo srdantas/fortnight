@@ -1,6 +1,6 @@
 package com.fortnight.controllers.web;
 
-import com.fortnight.domains.exceptions.AccountAlreadyExistsException;
+import com.fortnight.domains.exceptions.CustomerAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,7 +17,7 @@ public class WebControllerAdvice {
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler(AccountAlreadyExistsException.class)
+    @ExceptionHandler(CustomerAlreadyExistsException.class)
     public Mono<Void> conflict() {
         return Mono.empty();
     }
