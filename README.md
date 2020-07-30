@@ -1,5 +1,7 @@
 # Fortnight
 Simple Core Banking for basic operations, like movements between accounts and tax withdraw
+
+![Java CI with Gradle](https://github.com/srdantas/fortnight/workflows/Java%20CI%20with%20Gradle/badge.svg)
 ___
 
 ### Operations
