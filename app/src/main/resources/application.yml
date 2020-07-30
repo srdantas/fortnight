@@ -6,4 +6,9 @@ spring:
     username: "root"
     url: jdbc:mysql://localhost:3306/fortnight
 server:
-  port: 8081
+  port: 8080
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG

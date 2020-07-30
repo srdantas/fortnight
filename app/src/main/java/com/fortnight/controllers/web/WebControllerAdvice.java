@@ -1,6 +1,7 @@
 package com.fortnight.controllers.web;
 
 import com.fortnight.domains.exceptions.CustomerAlreadyExistsException;
+import com.fortnight.domains.exceptions.CustomerNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,6 +20,13 @@ public class WebControllerAdvice {
     @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(CustomerAlreadyExistsException.class)
     public Mono<Void> conflict() {
+        return Mono.empty();
+    }
+
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(CustomerNotFoundException.class)
+    public Mono<Void> execute() {
         return Mono.empty();
     }
 }

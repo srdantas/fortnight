@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
+import javax.validation.Valid;
+
 import static java.util.logging.Level.INFO;
 import static reactor.core.publisher.SignalType.ON_NEXT;
 
@@ -23,8 +25,8 @@ public class CustomerCreateController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<Void> execute(@RequestBody final Mono<CustomerRequest> request) {
-        return request
+    public Mono<Void> execute(@RequestBody @Valid final CustomerRequest request) {
+        return Mono.just(request)
                 .map(adapter::from)
                 .log("CustomerCreateController.execute.adapter", INFO, ON_NEXT)
                 .flatMap(customerCreateUseCase::execute);

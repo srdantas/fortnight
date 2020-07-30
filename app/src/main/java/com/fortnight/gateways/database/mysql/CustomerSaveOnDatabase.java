@@ -8,7 +8,7 @@ import com.fortnight.gateways.database.mysql.entities.CustomerEntity;
 import com.fortnight.gateways.database.mysql.repositories.CustomerRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DuplicateKeyException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionTemplate;
 import reactor.core.publisher.Mono;
@@ -35,7 +35,7 @@ public class CustomerSaveOnDatabase implements CustomerSaveGateway {
                 .map(this::save)
                 .log("CustomerSaveOnDatabase.execute.repository.save", INFO, ON_NEXT, ON_ERROR)
                 .then()
-                .onErrorMap(DuplicateKeyException.class, (ex) -> new CustomerAlreadyExistsException());
+                .onErrorMap(DataIntegrityViolationException.class, (ex) -> new CustomerAlreadyExistsException());
     }
 
     private CustomerEntity save(final CustomerEntity entity) {

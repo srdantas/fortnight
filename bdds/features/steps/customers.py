@@ -13,7 +13,7 @@ def generate_cpf():
 
         cpf.append(11 - val if val > 1 else 0)
 
-    return '%s%s%s.%s%s%s.%s%s%s-%s%s' % tuple(cpf)
+    return '%s%s%s%s%s%s%s%s%s%s%s' % tuple(cpf)
 
 
 class Model:
@@ -28,53 +28,53 @@ class Model:
         }
 
 
-@behave.given('valid account data')
+@behave.given('valid customer data')
 def random_valid_model(context):
     name = names.get_full_name()
     document = generate_cpf()
     context.model = Model(name, document)
 
 
-@behave.given('account data with document that already exists')
+@behave.given('customer data with document that already exists')
 def model_with_document_already_exists(context):
     random_valid_model(context)
-    request_create_account(context)
+    request_create_customer(context)
 
 
-@behave.given('account data without document')
+@behave.given('customer data without document')
 def model_without_document(context):
     name = names.get_full_name()
     document = None
     context.model = Model(name, document)
 
 
-@behave.given('account data without name')
+@behave.given('customer data without name')
 def model_without_name(context):
     name = None
     document = generate_cpf()
     context.model = Model(name, document)
 
 
-@behave.when('request account creation')
-def request_create_account(context):
+@behave.when('request customer creation')
+def request_create_customer(context):
     server_url = context.config.userdata['server']
-    response = requests.post(f'{server_url}/accounts', json=context.model.dict())
+    response = requests.post(f'{server_url}/customers', json=context.model.dict())
     context.response = response
 
 
-@behave.then('account is create with success!')
+@behave.then('customer is create with success!')
 def assert_success(context):
     assert context.failed is False
     assert context.response.status_code == 201
 
 
-@behave.then('account is not create with conflict!')
+@behave.then('customer is not create with conflict!')
 def assert_conflict(context):
     assert context.failed is False
     assert context.response.status_code == 409
 
 
-@behave.then('account is not create with invalid data')
+@behave.then('customer is not create with invalid data')
 def assert_invalid_data(context):
     assert context.failed is False
     assert context.response.status_code == 400

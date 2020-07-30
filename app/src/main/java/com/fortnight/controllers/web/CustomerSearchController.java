@@ -25,8 +25,8 @@ public class CustomerSearchController {
     private final CustomerSearchUseCase customerSearchUseCase;
 
     @GetMapping("{document}")
-    public Mono<CustomerResponse> execute(@PathVariable final Mono<String> document) {
-        return document
+    public Mono<CustomerResponse> execute(@PathVariable final String document) {
+        return Mono.just(document)
                 .flatMap(customerSearchUseCase::execute)
                 .log("CustomerSearchController.execute.customerSearchUseCase", INFO, ON_NEXT, ON_ERROR)
                 .map(adapter::from)

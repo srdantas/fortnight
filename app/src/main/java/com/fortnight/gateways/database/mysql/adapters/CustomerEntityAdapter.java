@@ -13,4 +13,10 @@ public interface CustomerEntityAdapter {
     @Mapping(target = "creation", source = "creation")
     @Mapping(target = "balance", source = "balance")
     CustomerEntity to(Customer customer);
+
+    @Mapping(target = "document", source = "document")
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "creation", source = "creation")
+    @Mapping(target = "balance", source = "balance")
+    Customer from(CustomerEntity entity);
 }
