@@ -30,9 +30,3 @@ pip install . && \
 behave
 ```
 *run features required python 3.\* and pip installed*
-
-## Model
-A database model used to save:
-![database model](diagram.jpeg)
-
-This model is very simple, it ignores the history that register transfers between accounts.
