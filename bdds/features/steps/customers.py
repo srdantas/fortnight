@@ -41,20 +41,6 @@ def model_with_document_already_exists(context):
     request_create_customer(context)
 
 
-@behave.given('customer data without document')
-def model_without_document(context):
-    name = names.get_full_name()
-    document = None
-    context.model = Model(name, document)
-
-
-@behave.given('customer data without name')
-def model_without_name(context):
-    name = None
-    document = generate_cpf()
-    context.model = Model(name, document)
-
-
 @behave.when('request customer creation')
 def request_create_customer(context):
     server_url = context.config.userdata['server']
@@ -73,8 +59,3 @@ def assert_conflict(context):
     assert context.failed is False
     assert context.response.status_code == 409
 
-
-@behave.then('customer is not create with invalid data')
-def assert_invalid_data(context):
-    assert context.failed is False
-    assert context.response.status_code == 400

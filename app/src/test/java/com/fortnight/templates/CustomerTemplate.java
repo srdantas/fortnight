@@ -12,7 +12,8 @@ import java.util.UUID;
 public class CustomerTemplate implements TemplateLoader {
 
     public enum Templates {
-        VALID
+        VALID,
+        VALID_CREATION
     }
 
     @Override
@@ -22,6 +23,11 @@ public class CustomerTemplate implements TemplateLoader {
             add("document", regex("\\d{3}\\d{3}\\d{3}\\d{2}"));
             add("creation", Instant.now());
             add("balance", random(BigDecimal.class, range(0, 10000)));
+        }});
+
+        Fixture.of(Customer.class).addTemplate(Templates.VALID_CREATION.name(), new Rule() {{
+            add("name", UUID.randomUUID().toString());
+            add("document", regex("\\d{3}\\d{3}\\d{3}\\d{2}"));
         }});
     }
 }
