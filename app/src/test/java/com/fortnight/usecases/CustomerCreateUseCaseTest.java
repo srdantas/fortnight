@@ -5,6 +5,7 @@ import com.fortnight.UnitTest;
 import com.fortnight.domains.Customer;
 import com.fortnight.gateways.CustomerSaveGateway;
 import com.fortnight.templates.CustomerTemplate;
+import com.fortnight.usecases.customers.CustomerCreateUseCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;

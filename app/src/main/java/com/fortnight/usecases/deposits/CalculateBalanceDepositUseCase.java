@@ -1,4 +1,4 @@
-package com.fortnight.usecases;
+package com.fortnight.usecases.deposits;
 
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -6,7 +6,7 @@ import reactor.core.publisher.Mono;
 import java.math.BigDecimal;
 
 @Component
-public class CalculateBalanceDepositUseCase {
+class CalculateBalanceDepositUseCase {
 
     public Mono<BigDecimal> execute(final BigDecimal balance, final BigDecimal deposit) {
         return Mono.just(balance)

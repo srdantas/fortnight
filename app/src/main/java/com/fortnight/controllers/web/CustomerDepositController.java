@@ -1,7 +1,7 @@
 package com.fortnight.controllers.web;
 
 import com.fortnight.controllers.web.requests.DepositRequest;
-import com.fortnight.usecases.CustomerDepositUseCase;
+import com.fortnight.usecases.deposits.CustomerDepositUseCase;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

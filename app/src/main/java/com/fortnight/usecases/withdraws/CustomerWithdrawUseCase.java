@@ -1,8 +1,9 @@
-package com.fortnight.usecases;
+package com.fortnight.usecases.withdraws;
 
 import com.fortnight.domains.Customer;
 import com.fortnight.domains.exceptions.CustomerBalanceNotEnoughException;
 import com.fortnight.gateways.CustomerUpdateGateway;
+import com.fortnight.usecases.customers.CustomerSearchUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;

@@ -2,7 +2,7 @@ package com.fortnight.controllers.web;
 
 import com.fortnight.controllers.web.adapters.CustomerRequestAdapter;
 import com.fortnight.controllers.web.requests.CustomerRequest;
-import com.fortnight.usecases.CustomerCreateUseCase;
+import com.fortnight.usecases.customers.CustomerCreateUseCase;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
 package com.fortnight.controllers.web;
 
 import com.fortnight.controllers.web.requests.WithdrawRequest;
-import com.fortnight.usecases.CustomerWithdrawUseCase;
+import com.fortnight.usecases.withdraws.CustomerWithdrawUseCase;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

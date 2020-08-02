@@ -1,4 +1,4 @@
-package com.fortnight.usecases;
+package com.fortnight.usecases.customers;
 
 import com.fortnight.domains.Customer;
 import com.fortnight.gateways.CustomerSearchByDocumentGateway;

@@ -6,6 +6,7 @@ import com.fortnight.domains.Customer;
 import com.fortnight.domains.exceptions.CustomerNotFoundException;
 import com.fortnight.gateways.CustomerSearchByDocumentGateway;
 import com.fortnight.templates.CustomerTemplate;
+import com.fortnight.usecases.customers.CustomerSearchUseCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

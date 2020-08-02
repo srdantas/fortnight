@@ -2,7 +2,7 @@ package com.fortnight.controllers.web;
 
 import com.fortnight.controllers.web.adapters.CustomerResponseAdapter;
 import com.fortnight.controllers.web.responses.CustomerResponse;
-import com.fortnight.usecases.CustomerSearchUseCase;
+import com.fortnight.usecases.customers.CustomerSearchUseCase;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
