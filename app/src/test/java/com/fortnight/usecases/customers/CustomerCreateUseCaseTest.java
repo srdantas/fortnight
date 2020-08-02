@@ -1,4 +1,4 @@
-package com.fortnight.usecases;
+package com.fortnight.usecases.customers;
 
 import br.com.six2six.fixturefactory.Fixture;
 import com.fortnight.UnitTest;
