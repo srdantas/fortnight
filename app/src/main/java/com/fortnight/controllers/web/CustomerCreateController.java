@@ -28,7 +28,7 @@ public class CustomerCreateController {
     public Mono<Void> execute(@RequestBody @Valid final CustomerRequest request) {
         return Mono.just(request)
                 .map(adapter::from)
-                .log("CustomerCreateController.execute.adapter", INFO, ON_NEXT)
+                .log("CustomerCreateController.adapter", INFO, ON_NEXT)
                 .flatMap(customerCreateUseCase::execute);
     }
 }

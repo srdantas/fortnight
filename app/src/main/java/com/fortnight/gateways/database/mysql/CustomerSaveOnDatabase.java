@@ -31,15 +31,16 @@ public class CustomerSaveOnDatabase implements CustomerSaveGateway {
     public Mono<Void> execute(@NonNull final Customer customer) {
         return Mono.just(customer)
                 .map(adapter::to)
-                .log("CustomerSaveOnDatabase.execute.adapter", INFO, ON_NEXT)
+                .log("CustomerSaveOnDatabase.adapter", INFO, ON_NEXT)
                 .map(this::save)
-                .log("CustomerSaveOnDatabase.execute.repository.save", INFO, ON_NEXT, ON_ERROR)
+                .log("CustomerSaveOnDatabase.save", INFO, ON_NEXT, ON_ERROR)
                 .then()
                 .onErrorMap(DataIntegrityViolationException.class, (ex) -> new CustomerAlreadyExistsException());
     }
 
-    private CustomerEntity save(final CustomerEntity entity) {
+    private Integer save(final CustomerEntity entity) {
         entity.setCreation(Instant.now());
-        return transactionTemplate.execute(status -> repository.save(entity));
+        return transactionTemplate.execute(status -> repository.insert(entity.getDocument(), entity.getName(),
+                entity.getCreation(), entity.getBalance()));
     }
 }

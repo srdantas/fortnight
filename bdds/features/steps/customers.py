@@ -16,7 +16,7 @@ def generate_cpf():
     return '%s%s%s%s%s%s%s%s%s%s%s' % tuple(cpf)
 
 
-class Model:
+class Customer:
     def __init__(self, name, document):
         self.name = name
         self.document = document
@@ -32,7 +32,7 @@ class Model:
 def random_valid_model(context):
     name = names.get_full_name()
     document = generate_cpf()
-    context.model = Model(name, document)
+    context.customer = Customer(name, document)
 
 
 @behave.given('customer data with document that already exists')
@@ -44,18 +44,17 @@ def model_with_document_already_exists(context):
 @behave.when('request customer creation')
 def request_create_customer(context):
     server_url = context.config.userdata['server']
-    response = requests.post(f'{server_url}/customers', json=context.model.dict())
-    context.response = response
+    response = requests.post(f'{server_url}/customers', json=context.customer.dict())
+    context.customer_response = response
 
 
 @behave.then('customer is create with success!')
 def assert_success(context):
     assert context.failed is False
-    assert context.response.status_code == 201
+    assert context.customer_response.status_code == 201
 
 
 @behave.then('customer is not create with conflict!')
 def assert_conflict(context):
     assert context.failed is False
-    assert context.response.status_code == 409
-
+    assert context.customer_response.status_code == 409

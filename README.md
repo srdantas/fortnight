@@ -7,13 +7,13 @@ ___
 ### Operations
 For using operations, need accounts for it, the API provides a endpoint for create, with name and document (like CPF).
 
-- Deposit in exists customerEntity
+- Deposit in exists a customer
 - Withdraw money
 - Transfer Money between accounts
 
 ### Operations rules
-- When withdraw money from customerEntity, 1% of value is charged
-- When deposit money into customerEntity, customerEntity received 0.5% of value
+- When withdraw money from a customer, 1% of value is charged
+- When deposit money into a customer, balance received 0.5% of value
 
 *Transfer between accounts is unlimited and free*
 

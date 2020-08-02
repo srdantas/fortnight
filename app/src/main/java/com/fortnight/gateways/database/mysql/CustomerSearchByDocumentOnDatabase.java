@@ -27,10 +27,10 @@ public class CustomerSearchByDocumentOnDatabase implements CustomerSearchByDocum
     public Mono<Customer> execute(final String document) {
         return Mono.just(document)
                 .map(repository::findById)
-                .log("CustomerSearchByDocumentOnDatabase.execute.repository.findById", INFO, ON_NEXT)
+                .log("CustomerSearchByDocumentOnDatabase.repository.findById", INFO, ON_NEXT)
                 .map(Optional::orElseThrow)
                 .map(adapter::from)
-                .log("CustomerSearchByDocumentOnDatabase.execute.adapter.from", INFO, ON_NEXT, ON_ERROR)
+                .log("CustomerSearchByDocumentOnDatabase.adapter.from", INFO, ON_NEXT, ON_ERROR)
                 .onErrorMap(NoSuchElementException.class, (e) -> new CustomerNotFoundException());
     }
 }

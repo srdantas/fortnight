@@ -28,9 +28,9 @@ public class CustomerSearchController {
     public Mono<CustomerResponse> execute(@PathVariable final String document) {
         return Mono.just(document)
                 .flatMap(customerSearchUseCase::execute)
-                .log("CustomerSearchController.execute.customerSearchUseCase", INFO, ON_NEXT, ON_ERROR)
+                .log("CustomerSearchController.customerSearchUseCase", INFO, ON_NEXT, ON_ERROR)
                 .map(adapter::from)
-                .log("CustomerSearchController.execute.adapter", INFO, ON_NEXT);
+                .log("CustomerSearchController.adapter", INFO, ON_NEXT);
     }
 
 }

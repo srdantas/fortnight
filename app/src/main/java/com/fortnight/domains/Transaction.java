@@ -8,6 +8,7 @@ import java.time.Instant;
 @Data
 public class Transaction {
 
+    private String document;
     private String correlation;
     private BigDecimal amount;
     private TransactionType type;

@@ -3,7 +3,6 @@ package com.fortnight.gateways.database.mysql;
 import br.com.six2six.fixturefactory.Fixture;
 import com.fortnight.UnitTest;
 import com.fortnight.domains.exceptions.CustomerAlreadyExistsException;
-import com.fortnight.domains.exceptions.CustomerNotFoundException;
 import com.fortnight.gateways.database.mysql.adapters.CustomerEntityAdapter;
 import com.fortnight.gateways.database.mysql.adapters.CustomerEntityAdapterImpl;
 import com.fortnight.gateways.database.mysql.entities.CustomerEntity;
@@ -36,7 +35,7 @@ class CustomerSaveOnDatabaseTest extends UnitTest {
     public void testSaveCustomerOnDatabaseWithSuccess() {
         final CustomerEntity entity = Fixture.from(CustomerEntity.class).gimme(CustomerEntityTemplate.Templates.VALID.name());
 
-        Mockito.when(transactionTemplate.execute(any())).thenReturn(entity);
+        Mockito.when(transactionTemplate.execute(any())).thenReturn(1);
 
         final var result = customerSaveOnDatabase.execute(adapter.from(entity));
 

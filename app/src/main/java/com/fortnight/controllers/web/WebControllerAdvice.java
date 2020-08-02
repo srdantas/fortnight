@@ -1,6 +1,7 @@
 package com.fortnight.controllers.web;
 
 import com.fortnight.domains.exceptions.CustomerAlreadyExistsException;
+import com.fortnight.domains.exceptions.CustomerBalanceNotEnoughException;
 import com.fortnight.domains.exceptions.CustomerNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -23,10 +24,15 @@ public class WebControllerAdvice {
         return Mono.empty();
     }
 
-
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(CustomerNotFoundException.class)
-    public Mono<Void> execute() {
+    public Mono<Void> notFound() {
+        return Mono.empty();
+    }
+
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(CustomerBalanceNotEnoughException.class)
+    public Mono<Void> forbidden() {
         return Mono.empty();
     }
 }

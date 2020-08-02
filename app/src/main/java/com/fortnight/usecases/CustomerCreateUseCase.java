@@ -21,7 +21,7 @@ public class CustomerCreateUseCase {
     public Mono<Void> execute(@NonNull final Customer customer) {
         return Mono.just(customer)
                 .map(this::createBalance)
-                .log("CustomerCreateUseCase.execute.createBalance", INFO, ON_NEXT)
+                .log("CustomerCreateUseCase.createBalance", INFO, ON_NEXT)
                 .flatMap(customerSaveGateway::execute);
     }
 

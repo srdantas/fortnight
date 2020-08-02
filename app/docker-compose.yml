@@ -15,6 +15,6 @@ services:
     container_name: flyway
     command: -url=jdbc:mysql://mysql -schemas=fortnight -user=root -password=0123456789 -connectRetries=60 migrate -X
     volumes:
-      - ./app/src/main/resources/db:/flyway/sql
+      - ./src/main/resources/db:/flyway/sql
     depends_on:
       - mysql

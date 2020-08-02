@@ -2,9 +2,9 @@ CREATE TABLE `transactions`
 (
  `correlation` varchar(100) NOT NULL ,
  `document`    varchar(13) NOT NULL ,
- `amount`      bigint NOT NULL ,
+ `amount`      float NOT NULL ,
  `date`        datetime NOT NULL ,
- `type`        enum('deposit', 'withdraw', 'transfer_debit', 'transfer_credit') NOT NULL ,
+ `type`        enum('deposit', 'withdraw', 'transfer') NOT NULL ,
 
 PRIMARY KEY (`correlation`, `document`),
 KEY `fkIdx_73` (`document`),
