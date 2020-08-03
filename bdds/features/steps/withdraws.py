@@ -1,8 +1,7 @@
-import random
-import uuid
-
 import behave
+import random
 import requests
+import uuid
 
 
 class Withdraw:
@@ -21,7 +20,7 @@ class Withdraw:
 @behave.given('withdraw of deposit amount')
 def withdraw_from_deposit(context):
     deposit = context.deposit
-    context.withdraw = Withdraw(deposit.amount)
+    context.withdraw = Withdraw(deposit.amount - ((deposit.amount / 100) * 50))
 
 
 @behave.given('random valid amount for withdraw')

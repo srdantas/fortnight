@@ -1,8 +1,10 @@
 package com.fortnight.usecases.deposits;
 
 import com.fortnight.domains.Customer;
+import com.fortnight.domains.TransactionType;
 import com.fortnight.gateways.CustomerUpdateGateway;
 import com.fortnight.usecases.customers.CustomerSearchUseCase;
+import com.fortnight.usecases.transactions.CreateTransactionUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -19,6 +21,7 @@ public class CustomerDepositUseCase {
 
     private final CustomerSearchUseCase searchUseCase;
     private final CustomerUpdateGateway customerUpdateGateway;
+    private final CreateTransactionUseCase createTransactionUseCase;
     private final CalculateBalanceDepositUseCase calculateBalanceDepositUseCase;
 
     public Mono<Void> execute(final String document,
@@ -29,7 +32,8 @@ public class CustomerDepositUseCase {
                 .flatMap(customer -> this.updateBalance(customer, deposit))
                 .log("CustomerDepositUseCase.updateBalance", INFO, ON_NEXT, ON_ERROR)
                 .flatMap(customerUpdateGateway::execute)
-                .then();
+                .log("CustomerDepositUseCase.customerUpdateGateway", INFO, ON_NEXT, ON_ERROR)
+                .flatMap(customer -> createTransactionUseCase.execute(correlation, deposit, TransactionType.DEPOSIT, customer));
     }
 
     private Mono<Customer> updateBalance(final Customer customer,

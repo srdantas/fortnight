@@ -8,4 +8,3 @@ Feature: Deposit on customer
     And make deposit on customer
 
     Then deposit is make with success!
-    And balance amount deposit is correct!

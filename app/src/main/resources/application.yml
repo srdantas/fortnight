@@ -1,3 +1,9 @@
+operations:
+  debit:
+    bonus: 0.5
+  withdraw:
+    tax: 1.0
+
 spring:
   application:
     name: fortnight

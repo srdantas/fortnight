@@ -10,7 +10,6 @@ Feature: Withdraw from customer
     And make a withdraw on customer
 
     Then withdraw is make with success!
-    And balance deposit withdraw is correct!
 
   Scenario: make withdraw when balance is insufficient
     Given valid customer data
@@ -20,4 +19,3 @@ Feature: Withdraw from customer
     And make a withdraw on customer
 
     Then withdraw is rejected!
-    And balance with amount 0!
