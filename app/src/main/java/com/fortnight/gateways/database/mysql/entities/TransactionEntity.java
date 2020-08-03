@@ -12,14 +12,17 @@ import java.time.Instant;
 public class TransactionEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String correlation;
     private BigDecimal amount;
     @Enumerated(value = EnumType.STRING)
     private TransactionType type;
     private Instant date;
 
-    @MapsId
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "document")
     private CustomerEntity customer;
+
 }
