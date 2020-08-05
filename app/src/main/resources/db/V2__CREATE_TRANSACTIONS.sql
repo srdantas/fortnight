@@ -5,7 +5,7 @@ CREATE TABLE `transactions`
     `document`    varchar(13)                              NOT NULL,
     `amount`      float                                    NOT NULL,
     `date`        datetime                                 NOT NULL,
-    `type`        enum ('deposit', 'withdraw', 'transfer') NOT NULL,
+    `type`        enum ('DEPOSIT', 'WITHDRAW', 'TRANSFER') NOT NULL,
 
     PRIMARY KEY (`id`),
     KEY `fkIdx_73` (`document`),

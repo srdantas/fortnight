@@ -6,11 +6,13 @@ import com.fortnight.domains.exceptions.CustomerBalanceNotEnoughException;
 import com.fortnight.gateways.CustomerUpdateGateway;
 import com.fortnight.usecases.customers.CustomerSearchUseCase;
 import com.fortnight.usecases.transactions.CreateTransactionUseCase;
+import com.fortnight.usecases.transactions.TransactionSearchByCorrelationAndDocumentUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import static java.util.logging.Level.INFO;
 import static reactor.core.publisher.SignalType.ON_ERROR;
@@ -24,8 +26,16 @@ public class CustomerWithdrawUseCase {
     private final CustomerUpdateGateway customerUpdateGateway;
     private final CreateTransactionUseCase createTransactionUseCase;
     private final CalculateBalanceWithdrawUseCase calculateBalanceWithdrawUseCase;
+    private final TransactionSearchByCorrelationAndDocumentUseCase transactionSearchByCorrelationAndDocumentUseCase;
 
     public Mono<Void> execute(final String document, final String correlation, final BigDecimal withdraw) {
+        return transactionSearchByCorrelationAndDocumentUseCase.execute(correlation, document)
+                .log("CustomerWithdrawUseCase.searchTransaction", INFO, ON_NEXT, ON_ERROR)
+                .filter(Optional::isEmpty)
+                .flatMap(transaction -> this.createWithDraw(document, correlation, withdraw));
+    }
+
+    private Mono<Void> createWithDraw(final String document, final String correlation, final BigDecimal withdraw) {
         return searchUseCase.execute(document)
                 .log("CustomerWithdrawUseCase.searchUseCase", INFO, ON_NEXT, ON_ERROR)
                 .flatMap(customer -> this.updateBalance(customer, withdraw))

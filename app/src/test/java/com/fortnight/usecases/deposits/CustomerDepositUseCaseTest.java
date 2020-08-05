@@ -3,12 +3,15 @@ package com.fortnight.usecases.deposits;
 import br.com.six2six.fixturefactory.Fixture;
 import com.fortnight.UnitTest;
 import com.fortnight.domains.Customer;
+import com.fortnight.domains.Transaction;
 import com.fortnight.domains.TransactionType;
 import com.fortnight.domains.exceptions.CustomerNotFoundException;
 import com.fortnight.gateways.CustomerUpdateGateway;
 import com.fortnight.templates.CustomerTemplate;
+import com.fortnight.templates.TransactionTemplate;
 import com.fortnight.usecases.customers.CustomerSearchUseCase;
 import com.fortnight.usecases.transactions.CreateTransactionUseCase;
+import com.fortnight.usecases.transactions.TransactionSearchByCorrelationAndDocumentUseCase;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
@@ -16,6 +19,7 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
 
@@ -39,6 +43,9 @@ class CustomerDepositUseCaseTest extends UnitTest {
     @Mock
     private CalculateBalanceDepositUseCase calculateBalanceDepositUseCase;
 
+    @Mock
+    private TransactionSearchByCorrelationAndDocumentUseCase transactionSearchByCorrelationAndDocumentUseCase;
+
     @Captor
     private ArgumentCaptor<Customer> customerCaptor;
 
@@ -50,6 +57,9 @@ class CustomerDepositUseCaseTest extends UnitTest {
 
         final BigDecimal balanceCalculate = BigDecimal.valueOf(new Random().nextFloat());
 
+        Mockito.when(transactionSearchByCorrelationAndDocumentUseCase.execute(correlation, customer.getDocument()))
+                .thenReturn(Mono.just(Optional.empty()));
+
         Mockito.when(searchUseCase.execute(customer.getDocument())).thenReturn(Mono.just(customer));
         Mockito.when(customerUpdateGateway.execute(any(Customer.class))).thenReturn(Mono.just(customer));
         Mockito.when(createTransactionUseCase.execute(correlation, amount, TransactionType.DEPOSIT, customer))
@@ -60,6 +70,9 @@ class CustomerDepositUseCaseTest extends UnitTest {
         final var result = customerDepositUseCase.execute(customer.getDocument(), correlation, amount);
 
         StepVerifier.create(result)
+                .then(() -> Mockito.verify(transactionSearchByCorrelationAndDocumentUseCase,
+                        Mockito.times(1))
+                        .execute(correlation, customer.getDocument()))
                 .then(() -> Mockito.verify(searchUseCase, Mockito.times(1))
                         .execute(customer.getDocument()))
                 .then(() -> Mockito.verify(customerUpdateGateway, Mockito.times(1))
@@ -78,17 +91,46 @@ class CustomerDepositUseCaseTest extends UnitTest {
         final String correlation = UUID.randomUUID().toString();
         final BigDecimal amount = BigDecimal.valueOf(new Random().nextFloat());
 
+        Mockito.when(transactionSearchByCorrelationAndDocumentUseCase.execute(correlation, customer.getDocument()))
+                .thenReturn(Mono.just(Optional.empty()));
+
         Mockito.when(searchUseCase.execute(customer.getDocument())).thenReturn(Mono.error(new CustomerNotFoundException()));
 
         final var result = customerDepositUseCase.execute(customer.getDocument(), correlation, amount);
 
         StepVerifier.create(result)
+                .then(() -> Mockito.verify(transactionSearchByCorrelationAndDocumentUseCase,
+                        Mockito.times(1))
+                        .execute(correlation, customer.getDocument()))
                 .then(() -> Mockito.verify(searchUseCase, Mockito.times(1))
                         .execute(customer.getDocument()))
                 .then(() -> Mockito.verify(customerUpdateGateway, Mockito.never()).execute(any()))
                 .then(() -> Mockito.verify(createTransactionUseCase, Mockito.never()).execute(anyString(), any(), any(), any()))
                 .then(() -> Mockito.verify(calculateBalanceDepositUseCase, Mockito.never()).execute(any(), any()))
                 .verifyError(CustomerNotFoundException.class);
+    }
+
+    @Test
+    public void testCreateDepositWhenTransactionAlreadyExists() {
+        final Transaction transaction = Fixture.from(Transaction.class).gimme(TransactionTemplate.Templates.VALID.name());
+
+        Mockito.when(transactionSearchByCorrelationAndDocumentUseCase
+                .execute(transaction.getCorrelation(), transaction.getCustomer().getDocument()))
+                .thenReturn(Mono.just(Optional.of(transaction)));
+
+        final var result = customerDepositUseCase
+                .execute(transaction.getCustomer().getDocument(), transaction.getCorrelation(), transaction.getAmount());
+
+        StepVerifier.create(result)
+                .then(() -> Mockito.verify(transactionSearchByCorrelationAndDocumentUseCase,
+                        Mockito.times(1))
+                        .execute(transaction.getCorrelation(), transaction.getCustomer().getDocument()))
+                .then(() -> Mockito.verify(searchUseCase, Mockito.never()).execute(any()))
+                .then(() -> Mockito.verify(customerUpdateGateway, Mockito.never()).execute(any()))
+                .then(() -> Mockito.verify(createTransactionUseCase, Mockito.never()).execute(anyString(), any(), any(), any()))
+                .then(() -> Mockito.verify(calculateBalanceDepositUseCase, Mockito.never()).execute(any(), any()))
+                .expectComplete()
+                .verify();
     }
 
 }

@@ -64,7 +64,6 @@ class CustomerWithdrawControllerTest extends IntegrationTest {
         final WithdrawRequest request = Fixture.from(WithdrawRequest.class).gimme(template.name());
 
         final var customer = this.createCustomer();
-        final var deposit = this.createDeposit(customer.getDocument());
 
         this.webTestClient
                 .post()
@@ -73,6 +72,38 @@ class CustomerWithdrawControllerTest extends IntegrationTest {
                 .body(BodyInserters.fromValue(request))
                 .exchange()
                 .expectStatus().isBadRequest();
+    }
+
+    @Test
+    public void testCreateWithdrawDuplicate() {
+        final WithdrawRequest request = Fixture.from(WithdrawRequest.class)
+                .gimme(WithdrawRequestTemplate.Templates.VALID.name());
+
+        final var customer = this.createCustomer();
+        final var deposit = this.createDeposit(customer.getDocument());
+
+        // update deposit withdraw
+        request.setAmount(deposit.getAmount());
+
+        this.webTestClient
+                .post()
+                .uri(format(CREATE_WITHDRAW_URI, customer.getDocument()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue(request))
+                .exchange()
+                .expectStatus()
+                .isCreated();
+
+
+        // retry
+        this.webTestClient
+                .post()
+                .uri(format(CREATE_WITHDRAW_URI, customer.getDocument()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue(request))
+                .exchange()
+                .expectStatus()
+                .isCreated();
     }
 
     private DepositRequest createDeposit(final String document) {

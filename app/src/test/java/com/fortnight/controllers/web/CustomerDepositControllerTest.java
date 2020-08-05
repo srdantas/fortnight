@@ -68,6 +68,31 @@ class CustomerDepositControllerTest extends IntegrationTest {
                 .expectStatus().isNotFound();
     }
 
+    @Test
+    public void testCreateDepositDuplicate() {
+        final DepositRequest request = Fixture.from(DepositRequest.class)
+                .gimme(DepositRequestTemplate.Templates.VALID.name());
+
+        final var customerRequest = this.createCustomer();
+
+        this.webTestClient
+                .post()
+                .uri(format(CREATE_DEPOSIT_URI, customerRequest.getDocument()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue(request))
+                .exchange()
+                .expectStatus().isCreated();
+
+        // retry
+        this.webTestClient
+                .post()
+                .uri(format(CREATE_DEPOSIT_URI, customerRequest.getDocument()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(BodyInserters.fromValue(request))
+                .exchange()
+                .expectStatus().isCreated();
+    }
+
     private CustomerRequest createCustomer() {
         final CustomerRequest request = Fixture.from(CustomerRequest.class)
                 .gimme(CustomerRequestTemplate.Templates.VALID.name());
