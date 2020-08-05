@@ -17,16 +17,37 @@ For using operations, need accounts for it, the API provides a endpoint for crea
 
 *Transfer between accounts is unlimited and free*
 
-## BDDs
+## bdds
 The folder bdds have a cucumber tests, write with python (behave), for all features exists on this project.
 This is a most high level of tests of this app.
 
 Into bdds exists a config file, called `behave.ini`, that have a server url config, default value is `localhost:8080`.
 
-for run features:
+for run features (before run, you need start the application and run it locally):
 ```shell
 cd bdds && \ 
 pip install . && \ 
 behave
 ```
 *run features required python 3.\* and pip installed*
+
+This tests, also generate a good doc, are very important for understand domains of this project and what are responsibility. 
+## app
+This is a java application.
+
+Are a reactive project with spring webflux and have a mysql database for data persists.
+An important decision for not using r2dbc, reactive api for relational databases, are because this lib haven't a support for relationship between tables.
+
+Packages are using basic clean architecture, this are proposes by uncle bob. 
+Have one public use case by a feature, withdraw, deposit and transfer.
+
+Database model is so simple, for make more fast and easy for understand and read code. When make a good database model for this problem are so big and complex.
+
+Tests into an app are two: unit tests and integration tests.
+- unit tests are used for test use cases, gateways and adapter
+- integration tests setup a spring context, with h2 for data base, and make requests using endpoints.
+
+#### bonus and tax
+For a bonus and tax into application (deposit and withdraw, respectively) required update values into `application.yml`.
+- `operations.debit.bonus` are used for calculate a bonus in a deposit. This value is percentage.
+- `operations.withdraw.tax` are used for calculate a tax in withdraw. This value is percentage.    
