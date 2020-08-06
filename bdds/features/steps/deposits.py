@@ -17,6 +17,12 @@ class Deposit:
             "amount": self.amount
         }
 
+    def create(self, context, document=None):
+        if not document:
+            document = context.customer.document
+        server_url = context.config.userdata['server']
+        return requests.post(f'{server_url}/customers/{document}/deposits', json=self.dict())
+
 
 @behave.given("random valid amount for deposit")
 def random_valid_amount(context):
@@ -27,10 +33,7 @@ def random_valid_amount(context):
 
 @behave.when("make deposit on customer")
 def make_deposit(context):
-    document = context.customer.document
-    server_url = context.config.userdata['server']
-    response = requests.post(f'{server_url}/customers/{document}/deposits', json=context.deposit.dict())
-    context.deposit_response = response
+    context.deposit_response = context.deposit.create(context)
 
 
 @behave.then("deposit is make with success!")

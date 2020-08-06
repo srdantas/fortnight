@@ -27,6 +27,10 @@ class Customer:
             'document': self.document
         }
 
+    def create(self, context):
+        server_url = context.config.userdata['server']
+        return requests.post(f'{server_url}/customers', json=self.dict())
+
 
 @behave.given('valid customer data')
 def random_valid_model(context):
@@ -43,9 +47,7 @@ def model_with_document_already_exists(context):
 
 @behave.when('request customer creation')
 def request_create_customer(context):
-    server_url = context.config.userdata['server']
-    response = requests.post(f'{server_url}/customers', json=context.customer.dict())
-    context.customer_response = response
+    context.customer_response = context.customer.create(context)
 
 
 @behave.then('customer is create with success!')
