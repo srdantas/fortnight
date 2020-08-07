@@ -25,4 +25,8 @@ public class TransactionEntity {
     @JoinColumn(name = "document")
     private CustomerEntity customer;
 
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "id")
+    private TransferEntity transfer;
+
 }
