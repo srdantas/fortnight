@@ -12,11 +12,15 @@ public class TransferEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "transaction", referencedColumnName = "correlation")
+    private TransactionEntity transaction;
+
     @ManyToOne
-    @JoinColumn(referencedColumnName = "document")
+    @JoinColumn(name = "debtor", referencedColumnName = "document")
     private CustomerEntity debtor;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "document")
+    @JoinColumn(name = "creditor", referencedColumnName = "document")
     private CustomerEntity creditor;
 }

@@ -18,7 +18,6 @@ public class Transaction {
     private String correlation;
     private BigDecimal amount;
     private TransactionType type;
-    private Transfer transfer;
     private Instant date;
 
 }
