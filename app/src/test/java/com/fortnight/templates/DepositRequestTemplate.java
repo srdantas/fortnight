@@ -6,7 +6,6 @@ import br.com.six2six.fixturefactory.loader.TemplateLoader;
 import com.fortnight.controllers.web.requests.DepositRequest;
 
 import java.math.BigDecimal;
-import java.util.UUID;
 
 public class DepositRequestTemplate implements TemplateLoader {
 
@@ -20,7 +19,7 @@ public class DepositRequestTemplate implements TemplateLoader {
     public void load() {
         Fixture.of(DepositRequest.class)
                 .addTemplate(Templates.VALID.name(), new Rule() {{
-                    add("correlation", UUID.randomUUID().toString());
+                    add("correlation", regex("\\d{5}-\\d{5}-\\d{5}-\\d{5}"));
                     add("amount", random(BigDecimal.class, range(0.0, 10000.0)));
                 }});
 

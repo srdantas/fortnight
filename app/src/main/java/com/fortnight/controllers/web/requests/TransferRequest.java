@@ -6,5 +6,6 @@ import lombok.Data;
 public class TransferRequest {
 
     private String correlation;
+    private double amount;
     private CreditorRequest creditor;
 }

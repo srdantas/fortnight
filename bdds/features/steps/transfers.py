@@ -1,4 +1,5 @@
 import random
+import uuid
 
 import behave
 import names
@@ -10,14 +11,18 @@ import deposits
 
 class Transfer:
 
-    def __init__(self, creditor, debtor):
+    def __init__(self, creditor, debtor, amount, correlation=uuid.uuid4()):
         self.creditor = creditor
         self.debtor = debtor
+        self.amount = amount
+        self.correlation = str(correlation)
 
     def dict_creditor(self):
         return {
-            'debtor': {
-                'customer': self.debtor.document
+            'correlation': self.correlation,
+            'amount': self.amount,
+            'creditor': {
+                'document': self.debtor.document
             }
         }
 
@@ -43,7 +48,9 @@ def random_valid_customer_for_transfer(context):
     assert creditor_response.status_code == 201
     assert debtor_response.status_code == 201
 
-    context.transfer = Transfer(creditor, debtor)
+    random_value = random.random() * random.randint(1, 100)
+    random_amount = float("{:.2f}".format(random_value))
+    context.transfer = Transfer(creditor, debtor, random_amount)
 
 
 @behave.given('create deposit for creditor')

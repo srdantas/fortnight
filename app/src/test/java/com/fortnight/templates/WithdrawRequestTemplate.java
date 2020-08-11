@@ -20,7 +20,7 @@ public class WithdrawRequestTemplate implements TemplateLoader {
     public void load() {
         Fixture.of(WithdrawRequest.class)
                 .addTemplate(WithdrawRequestTemplate.Templates.VALID.name(), new Rule() {{
-                    add("correlation", UUID.randomUUID().toString());
+                    add("correlation", regex("\\d{5}-\\d{5}-\\d{5}-\\d{5}"));
                     add("amount", random(BigDecimal.class, range(0.0, 10000.0)));
                 }});
 
