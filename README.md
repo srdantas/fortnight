@@ -33,10 +33,12 @@ after build, you can run with network mode:
 docker run --net=host fortnight
 ```
 
-Fortunately, this project have a docker compose configure for run dependencies:
+Fortunately, this project have a docker compose configure for run dependencies and app:
 ```shell script
 ~ docker-compose up
 ```
+
+When you need run always dependencies, exists a docker compose file into app for run it.
 
 ## bdds
 The folder bdds have a cucumber tests, write with python (behave), for all features exists on this project.
