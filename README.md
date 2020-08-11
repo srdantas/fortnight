@@ -17,6 +17,27 @@ For using operations, need accounts for it, the API provides a endpoint for crea
 
 *Transfer between accounts is unlimited and free*
 
+## Run
+For run app, build application
+```shell script
+app ~ ./gradlew clean build
+```
+
+build a docker image locally:
+```shell script
+app ~ docker build -t fortnight .
+```
+
+after build, you can run with network mode:
+```shell script
+docker run --net=host fortnight
+```
+
+Fortunately, this project have a docker compose configure for run dependencies:
+```shell script
+~ docker-compose up
+```
+
 ## bdds
 The folder bdds have a cucumber tests, write with python (behave), for all features exists on this project.
 This is a most high level of tests of this app.
